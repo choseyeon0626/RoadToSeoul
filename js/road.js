@@ -14,6 +14,15 @@
   document.getElementById('road-name').textContent = road.name;
   document.getElementById('road-person').textContent = `${era.name} · ${road.person}`;
   document.getElementById('road-desc').textContent = road.desc;
+
+  /* Gill history: data.js의 세 스토리를 기존 영역에 연결 */
+  ['gillstory1', 'gillstory2', 'gillstory3'].forEach((key) => {
+    const storyEl = document.getElementById(`road-${key}`);
+    if (!storyEl) return;
+    storyEl.textContent = road[key] || '';
+    storyEl.hidden = !road[key];
+  });
+
   if (road.img) document.getElementById('road-bg').style.backgroundImage = `url('${road.img}')`;
 
   /* 같은 시대의 다른 길 + 시대 링크 */

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -12,10 +13,12 @@
   <link rel="stylesheet" href="css/sidebar.css">
   <link rel="stylesheet" href="css/road.css">
 </head>
+
 <body class="road-page" data-era="joseon">
 
   <aside class="sidebar" id="sidebar" data-theme="light">
-    <a class="sidebar__logo" href="index.html" aria-label="길記 in Seoul – 홈"><img src="img/logo-gilgi.png" width="110" height="147" alt="길記 in Seoul"></a>
+    <a class="sidebar__logo" href="index.html" aria-label="길記 in Seoul – 홈"><img src="img/logo-gilgi.png" width="110"
+        height="147" alt="길記 in Seoul"></a>
     <button class="sidebar__toggle" type="button" aria-expanded="false" aria-controls="site-nav">
       <span>메뉴</span>
     </button>
@@ -46,27 +49,45 @@
       <p class="road-hero__person" id="road-person"></p>
     </section>
 
+
     <section class="road-body" data-theme="dark">
       <div class="road-body__inner">
         <div class="road-row">
-          <h2 class="road-row__title">이름의 유래<span>ORIGIN</span></h2>
-          <p class="road-row__text" id="road-desc"></p>
+          <h2 class="road-row__title">
+            길에 대하여<span>Gill history</span>
+          </h2>
+
+          <div class="road-row__story">
+            <p class="road-row__text" id="road-desc"></p>
+            <p class="road-row__text" id="road-gillstory1"></p>
+            <p class="road-row__text" id="road-gillstory2"></p>
+            <p class="road-row__text" id="road-gillstory3"></p>
+          </div>
         </div>
+
         <div class="road-row">
           <h2 class="road-row__title">다른 길<span>MORE ROADS</span></h2>
           <ul class="road-row__links" id="road-more"></ul>
         </div>
+
         <div class="road-row">
           <h2 class="road-row__title">시대<span id="road-era-en"></span></h2>
-          <a class="road-link" id="road-era" href="era.html">시대로 돌아가기 <span aria-hidden="true">→</span></a>
+          <a class="road-link" id="road-era" href="era.html">
+            시대로 돌아가기 <span aria-hidden="true">→</span>
+          </a>
         </div>
       </div>
-      <footer class="road-foot"><small>© 길이 된 이름</small></footer>
+
+      <footer class="road-foot">
+        <small>© 길이 된 이름</small>
+      </footer>
     </section>
+
   </main>
 
   <script src="js/data.js"></script>
   <script src="js/sidebar.js"></script>
   <script src="js/road.js"></script>
 </body>
+
 </html>

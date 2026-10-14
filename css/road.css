@@ -132,3 +132,26 @@ body.road-page.from-card .sidebar { animation: fade 0.8s var(--ease) 0.6s both; 
   .road-row__title, .road-row__text, .road-row__links, .road-row > .road-link { grid-column: span 12; }
   .road-row__links { grid-template-columns: 1fr; }
 }
+
+
+.road-row__story {
+  grid-column: span 9;
+  min-width: 0;
+}
+
+.road-row__story .road-row__text {
+  max-width: 36em;
+  margin: 0 0 16px;
+}
+
+.road-row__story .road-row__text:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  .road-row__story {
+    grid-column: span 12;
+  }
+}
+
+
