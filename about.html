@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>About – 길이 된 이름</title>
+  <meta name="description" content="도로명에 남은 한국 역사의 인물과 이야기를 시대별로 살펴봅니다.">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/about.css">
+</head>
+<body class="about-page">
+
+  <aside class="sidebar" id="sidebar" data-theme="dark">
+    <a class="sidebar__logo" href="index.html" aria-label="길記 in Seoul – 홈"><img src="img/logo-gilgi.png" width="110" height="147" alt="길記 in Seoul"></a>
+    <button class="sidebar__toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span>메뉴</span>
+    </button>
+    <nav class="sidebar__nav" id="site-nav" aria-label="주요 메뉴">
+      <a class="sidebar__link" href="era.html?era=joseon" data-era="joseon" style="--era:#A83D3D">
+        <i class="sidebar__dot"></i><span class="sidebar__text">조선시대</span>
+      </a>
+      <a class="sidebar__link" href="era.html?era=japanese" data-era="japanese" style="--era:#315B72">
+        <i class="sidebar__dot"></i><span class="sidebar__text">일제강점기</span>
+      </a>
+      <a class="sidebar__link" href="era.html?era=three-kingdoms" data-era="three-kingdoms" style="--era:#C99A3E">
+        <i class="sidebar__dot"></i><span class="sidebar__text">삼국시대</span>
+      </a>
+      <a class="sidebar__link sidebar__link--plain is-active" href="about.html" aria-current="page">
+        <i class="sidebar__dot"></i><span class="sidebar__text">About</span>
+      </a>
+    </nav>
+  </aside>
+
+  <main class="about">
+    <header class="about__head">
+      <p class="about__eyebrow">ABOUT</p>
+      <h1 class="about__title">길에 남은 이름을<br>따라 걷는 기록</h1>
+    </header>
+
+    <div class="about__rows">
+      <section class="about-row">
+        <h2 class="about-row__title">프로젝트<span>PROJECT</span></h2>
+        <div class="about-row__body">
+          <p>도로명에 남은 한국 역사의 인물과 이야기를 시대별로 살펴봅니다.</p>
+          <p>조선시대, 일제강점기, 삼국시대마다 세 개의 길을 골라 이름의 유래와 인물, 그리고 지금의 모습을 이어서 보여줍니다.</p>
+          <p class="about-row__note">임시 소개 문구입니다. 추후 확정됩니다.</p>
+        </div>
+      </section>
+
+      <section class="about-row">
+        <h2 class="about-row__title">시대<span>ERAS</span></h2>
+        <ul class="about-row__list" id="about-eras"></ul>
+      </section>
+
+      <section class="about-row">
+        <h2 class="about-row__title">연락<span>CONTACT</span></h2>
+        <div class="about-row__body">
+          <p class="about-row__note">연락처와 크레딧이 들어갈 자리입니다.</p>
+        </div>
+      </section>
+    </div>
+
+    <footer class="about__foot"><small>© 길이 된 이름</small></footer>
+  </main>
+
+  <script src="js/data.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/about.js"></script>
+</body>
+</html>

@@ -1,0 +1,361 @@
+/* ── 스냅 컨테이너 ──────────────────────────────────── */
+.snap-container {
+  position: relative;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+}
+.hero, .roads { scroll-snap-align: start; }
+
+/* ── Hero ───────────────────────────────────────────── */
+.hero {
+  position: relative;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--gray-900);
+  color: #FEFEFE;
+}
+
+/* 배경 사진: 야경 + 남산타워. 어두운 하늘 위에 로고·문구가 얹힌다 */
+.hero__bg {
+  position: absolute;
+  inset: -2% 0 0;
+  background: var(--gray-900) url('../img/home-back.jpg') center 0% / cover no-repeat;
+  transform: translateY(calc(var(--p, 0) * 16vh));   /* 스크롤 시 천천히 덮이는 느낌 */
+}
+/* 상단은 하늘을 더 깊게, 하단은 도로 빛이 살도록 약하게 */
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 6, 20, 0.35), rgba(0, 6, 20, 0) 45%, rgba(0, 0, 0, 0.28));
+}
+
+.hero__inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 17vh var(--gutter) 0;
+  text-align: center;
+  transform: translateY(calc(var(--p, 0) * 8vh));
+  opacity: calc(1 - var(--p, 0) * 1.1);
+}
+
+.hero__logo { line-height: 0; }
+.hero__logo img {
+  display: block;
+  width: clamp(84px, 6vw, 120px);
+  height: auto;
+}
+
+.hero__copy {
+  margin-top: clamp(56px, 15vh, 170px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 6vh, 64px);
+  font-family: var(--font-title);          /* EBS 훈민정음 새론 (Regular) */
+  font-weight: normal;
+  color: #FEFEFE;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
+}
+.hero__ko { font-size: clamp(18px, 1.15vw, 24px); line-height: 1.5; }
+.hero__en { font-size: clamp(18px, 1.25vw, 26px); line-height: 1.5; }
+
+/* 하단 중앙 세로선: 다음 섹션으로 이어지는 연결 요소 */
+.hero__cue {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 15vh;
+  min-height: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: rgba(254, 254, 254, 0.75);
+}
+.hero__cue-line {
+  position: relative;
+  flex: 1;
+  width: 1px;
+  overflow: hidden;
+  background: rgba(254, 254, 254, 0.28);
+}
+.hero__cue-line::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 40%;
+  background: #FEFEFE;
+  animation: cue 2.6s var(--ease) infinite;
+}
+@keyframes cue {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(250%); }
+}
+
+.hero__progress,
+.hero__next {
+  position: absolute;
+  bottom: 32px;
+  font-size: 13px;
+  color: rgba(254, 254, 254, 0.8);
+}
+.hero__progress { left: var(--gutter); }
+.hero__next { right: var(--gutter); transition: color 0.3s var(--ease); }
+.hero__next:hover, .hero__next:focus-visible { color: #FEFEFE; }
+
+/* 로드 시 한 번만: 제목 → 소개 → 세로선 순서로 등장 */
+.hero__logo, .hero__ko, .hero__en, .hero__cue {
+  opacity: 0;
+  animation: rise 0.9s var(--ease) forwards;
+}
+.hero__logo { animation-delay: 0.2s; }
+.hero__ko   { animation-delay: 0.6s; }
+.hero__en   { animation-delay: 0.85s; }
+.hero__cue  { animation-delay: 1.2s; }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero__cue { animation-name: rise-cue; }
+@keyframes rise-cue {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Roads: 4분할 패널 ───────────────────────────────
+   처음엔 4등분(gap 0) → 하나를 호버하면 그 패널이 크게 펼쳐지고 나머지는 좁아진다. */
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.roads {
+  position: relative;
+  height: 100vh;
+  height: 100dvh;
+  padding: 0 20px 0 calc(var(--content-left) + 20px);
+  background: var(--color-bg);
+}
+
+.panels {
+  --t: 0.8s;
+  --e: cubic-bezier(0.65, 0, 0.2, 1);
+  display: flex;
+  gap: 0;
+  height: 100%;
+  transition: gap var(--t) var(--e);
+}
+.panels.has-active { gap: 20px; }
+
+.panel {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  color: #FEFEFE;
+  background: var(--gray-800);
+  cursor: pointer;
+  transition: flex-grow var(--t) var(--e);
+}
+.panel.is-active { flex-grow: 10; cursor: default; }
+.panel:focus-visible { outline-offset: -4px; }
+
+/* 배경 사진: 높이 기준으로 고정 스케일 → 폭이 넓어질수록 사진이 펼쳐져 보인다 */
+.panel__bg {
+  position: absolute;
+  inset: 0;
+  background-position: var(--pos, 50% 50%);
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: transform 1.2s var(--e);
+}
+.panel.is-active .panel__bg { transform: scale(1.02); }
+.panel__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.38), rgba(0, 0, 0, 0) 38%, rgba(0, 0, 0, 0.15) 60%, rgba(0, 0, 0, 0.72));
+  opacity: 0.55;
+  transition: opacity 0.8s var(--e);
+}
+.panel.is-active .panel__scrim { opacity: 1; }
+.panels.has-active .panel:not(.is-active) .panel__scrim { opacity: 0.8; }
+
+/* 상단 라벨 (가로): 4등분 상태 + 펼쳐진 패널 */
+.panel__head {
+  position: absolute;
+  top: 28px; left: 28px; right: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  white-space: nowrap;
+  transition: opacity 0.5s var(--e);
+}
+.panel__no { font-size: 12px; letter-spacing: 0.02em; color: rgba(254, 254, 254, 0.85); }
+.panel__name {
+  font-family: var(--font-title);
+  font-size: clamp(26px, 2.4vw, 36px);
+  font-weight: normal;
+  line-height: 1.25;
+  color: #FEFEFE;
+}
+
+/* 좁아진 패널: 세로 글자로 교체 */
+.panel__vname {
+  position: absolute;
+  top: 28px; left: 50%;
+  transform: translateX(-50%);
+  writing-mode: vertical-rl;
+  font-family: var(--font-title);
+  font-size: 22px;
+  font-weight: normal;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  color: #FEFEFE;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s var(--e);
+}
+.panels.has-active .panel:not(.is-active) .panel__head { opacity: 0; }
+.panels.has-active .panel:not(.is-active) .panel__vname { opacity: 1; transition-delay: 0.25s; }
+
+/* 링크: 박스 없이 "텍스트 →" */
+.panel__more {
+  display: inline-block;
+  font-size: 14px;
+  color: #FEFEFE;
+}
+.panel__more span { display: inline-block; transition: transform 0.4s var(--ease); }
+.panel__more:hover span, .panel__more:focus-visible span { transform: translateX(5px); }
+.panel__more--top { position: absolute; top: 32px; right: 28px; }
+
+/* 펼쳐졌을 때만 나오는 내용 */
+.panel__body {
+  position: absolute;
+  left: 28px; right: 28px; bottom: 36px;
+  opacity: 0;
+  pointer-events: none;
+}
+.panel__more--top { opacity: 0; pointer-events: none; transition: opacity 0.4s var(--e); }
+.panel.is-active .panel__more--top { opacity: 1; pointer-events: auto; transition-delay: 0.4s; }
+.panel.is-active .panel__body { pointer-events: auto; }
+
+/* 길 3개 */
+.panel__roads {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: clamp(16px, 2vw, 32px);
+}
+.panel__roads li {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.panel.is-active .panel__roads li {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.6s var(--e) var(--d, 0.4s), transform 0.6s var(--e) var(--d, 0.4s);
+}
+.panel.is-active .panel__body { opacity: 1; }
+
+.panel-road {
+  display: grid;
+  gap: 2px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(254, 254, 254, 0.55);
+}
+.panel-road__no { font-size: 12px; color: rgba(254, 254, 254, 0.85); }
+.panel-road__name {
+  margin-top: 6px;
+  font-family: var(--font-title);
+  font-size: clamp(24px, 2.4vw, 36px);
+  line-height: 1.25;
+  white-space: nowrap;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 8px;
+  transition: text-decoration-color 0.4s var(--ease);
+}
+.panel-road__arrow {
+  margin-left: 8px;
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.6em;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.panel-road__person { font-size: 14px; color: rgba(254, 254, 254, 0.9); }
+.panel-road:hover .panel-road__name,
+.panel-road:focus-visible .panel-road__name { text-decoration-color: var(--era); }
+.panel-road:hover .panel-road__arrow,
+.panel-road:focus-visible .panel-road__arrow { opacity: 1; transform: none; }
+
+/* About 패널 본문 */
+.panel__body--about {
+  max-width: 28em;
+  display: grid;
+  gap: 14px;
+  transition: opacity 0.6s var(--e) 0.4s;
+}
+.panel__desc { font-size: 15px; line-height: 1.7; color: rgba(254, 254, 254, 0.92); }
+
+/* ── 반응형 ─────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .roads { padding: 64px 20px 20px; }
+  .panel__head { top: 22px; left: 22px; }
+  .panel__more--top { top: 26px; right: 22px; }
+  .panel__body { left: 22px; right: 22px; bottom: 28px; }
+}
+
+@media (max-width: 767px) {
+  .snap-container { scroll-snap-type: y proximity; }
+
+  .hero__bg { background-position: 68% 0%; }   /* 세로 화면에서도 남산타워가 보이도록 */
+  .hero__inner { padding-top: 18vh; }
+  .hero__copy { margin-top: 12vh; gap: 20px; }
+  .hero__ko, .hero__en { font-size: 17px; }
+  .hero__progress { display: none; }
+
+  /* 세로 아코디언 */
+  .roads { padding: 64px 12px 12px; }
+  .panels { flex-direction: column; }
+  .panels.has-active { gap: 10px; }
+  .panel { flex-basis: 0; }
+  .panel.is-active { flex-grow: 6; }
+  .panel__bg { background-position: var(--pos); }
+
+  .panel__head { top: 16px; left: 16px; flex-direction: row; align-items: baseline; gap: 12px; }
+  .panel__name { font-size: 24px; }
+  .panels.has-active .panel:not(.is-active) .panel__head { opacity: 1; }   /* 세로 글자 대신 가로 유지 */
+  .panels.has-active .panel:not(.is-active) .panel__no { display: none; }
+  .panel__vname { display: none; }
+  .panel.is-active .panel__head { align-items: flex-start; flex-direction: column; gap: 4px; }
+
+  .panel__more--top { top: 20px; right: 16px; }
+  .panel__body { left: 16px; right: 16px; bottom: 16px; }
+  .panel__roads { grid-template-columns: 1fr; row-gap: 8px; }
+  .panel-road {
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "name person" "no person";
+    column-gap: 14px;
+    align-items: baseline;
+    padding-top: 8px;
+  }
+  .panel-road__name { grid-area: name; margin-top: 0; font-size: 22px; }
+  .panel-road__no { grid-area: no; display: none; }
+  .panel-road__person { grid-area: person; justify-self: end; font-size: 13px; }
+  .panel-road__arrow { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panels, .panel { transition-duration: 0.01ms !important; }
+}

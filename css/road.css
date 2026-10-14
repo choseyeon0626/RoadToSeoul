@@ -1,0 +1,134 @@
+/* 길 상세: 일반 문서 스크롤 */
+body.road-page { overflow-y: auto; }
+body.road-page.menu-open { overflow: hidden; }
+
+/* ── 첫 화면: 확장된 카드가 이어지는 풀스크린 ───────── */
+.road-hero {
+  position: relative;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #FEFEFE;
+  background: var(--gray-900);
+}
+.road-hero__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-image: linear-gradient(160deg, var(--era), #000000);
+  animation: bg-settle 1.2s var(--ease) both;
+}
+.road-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35), transparent 40%, rgba(0, 0, 0, 0.6));
+}
+@keyframes bg-settle { from { transform: scale(1.05); } to { transform: scale(1); } }
+
+.road-hero__inner,
+.road-hero__person { position: relative; z-index: 1; }
+
+.road-hero__inner {
+  padding-left: calc(var(--content-left) + var(--gutter) - 24px);
+  padding-top: 8px;
+}
+.road-hero__label { font-size: 12px; letter-spacing: 0.04em; color: rgba(254, 254, 254, 0.9); }
+.road-hero__sep { margin: 0 4px; color: var(--era); }
+.road-hero__name {
+  margin-top: 10px;
+  font-size: clamp(48px, 7vw, 96px);
+  line-height: 1.15;
+  color: #FEFEFE;
+}
+.road-hero__person {
+  padding-left: calc(var(--content-left) + var(--gutter) - 24px);
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(254, 254, 254, 0.85);
+}
+
+/* 카드에서 진입했을 때: 번호·도로명은 이미 보이던 것이므로 바로, 나머지는 천천히 */
+.road-hero__person { animation: fade 0.9s var(--ease) 0.5s both; }
+body.road-page:not(.from-card) .road-hero__label,
+body.road-page:not(.from-card) .road-hero__name { animation: fade 0.9s var(--ease) 0.2s both; }
+body.road-page.from-card .sidebar { animation: fade 0.8s var(--ease) 0.6s both; }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* ── 본문: 흰 배경, 얇은 선, 큰 여백 ────────────────── */
+.road-body {
+  background: var(--color-bg);
+  padding: clamp(64px, 12vh, 140px) var(--gutter) 0 calc(var(--content-left) + var(--gutter));
+}
+.road-body__inner { max-width: 1240px; margin: 0 auto; }
+
+.road-row {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 16px;
+  padding: clamp(28px, 4vh, 44px) 0;
+  border-top: 1px solid var(--line);
+}
+.road-row:last-child { border-bottom: 1px solid var(--line); }
+
+.road-row__title {
+  grid-column: span 3;
+  font-size: 22px;
+  line-height: 1.35;
+  color: var(--gray-800);
+}
+.road-row__title span {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--gray-500);
+}
+.road-row__text,
+.road-row__links,
+.road-row > .road-link { grid-column: span 9; }
+
+.road-row__text { max-width: 36em; font-size: 16px; color: var(--gray-700); }
+
+.road-row__links { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 16px; }
+.road-link {
+  display: inline-block;
+  width: fit-content;
+  font-size: 15px;
+  color: var(--gray-800);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+  transition: text-decoration-color 0.4s var(--ease);
+}
+.road-link span { display: inline-block; transition: transform 0.4s var(--ease); }
+.road-link:hover, .road-link:focus-visible { text-decoration-color: var(--era); }
+.road-link:hover span, .road-link:focus-visible span { transform: translateX(5px); }
+.road-link small { margin-left: 8px; font-size: 12px; color: var(--gray-500); }
+
+.road-foot {
+  padding: clamp(40px, 7vh, 72px) 0 28px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--gray-500);
+}
+
+/* ── 반응형 ─────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .road-body { padding-left: var(--gutter); }
+}
+@media (max-width: 767px) {
+  .road-hero { padding: 24px; }
+  .road-hero__inner, .road-hero__person { padding-left: 0; }
+  .road-hero__inner { padding-top: 64px; }
+  .road-row { row-gap: 14px; }
+  .road-row__title, .road-row__text, .road-row__links, .road-row > .road-link { grid-column: span 12; }
+  .road-row__links { grid-template-columns: 1fr; }
+}

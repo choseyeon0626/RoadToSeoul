@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>시대별 길 – 길이 된 이름</title>
+  <meta name="description" content="한 시대를 대표하는 세 개의 길을 따라 걸어봅니다.">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/era.css">
+</head>
+<body class="era-page" data-era="joseon">
+
+  <!-- 왼쪽 고정 내비 (홈과 동일, 흰 배경 위이므로 data-theme="dark") -->
+  <aside class="sidebar" id="sidebar" data-theme="dark">
+    <a class="sidebar__logo" href="index.html" aria-label="길記 in Seoul – 홈"><img src="img/logo-gilgi.png" width="110" height="147" alt="길記 in Seoul"></a>
+    <button class="sidebar__toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span>메뉴</span>
+    </button>
+    <nav class="sidebar__nav" id="site-nav" aria-label="주요 메뉴">
+      <a class="sidebar__link" href="era.html?era=joseon" data-era="joseon" style="--era:#A83D3D">
+        <i class="sidebar__dot"></i><span class="sidebar__text">조선시대</span>
+      </a>
+      <a class="sidebar__link" href="era.html?era=japanese" data-era="japanese" style="--era:#315B72">
+        <i class="sidebar__dot"></i><span class="sidebar__text">일제강점기</span>
+      </a>
+      <a class="sidebar__link" href="era.html?era=three-kingdoms" data-era="three-kingdoms" style="--era:#C99A3E">
+        <i class="sidebar__dot"></i><span class="sidebar__text">삼국시대</span>
+      </a>
+      <a class="sidebar__link sidebar__link--plain" href="about.html">
+        <i class="sidebar__dot"></i><span class="sidebar__text">About</span>
+      </a>
+    </nav>
+  </aside>
+
+  <main class="era-hero" id="era-hero">
+    <header class="era-hero__head">
+      <p class="era-hero__eyebrow" id="era-eyebrow"></p>
+      <h2 class="era-hero__title" id="era-title"></h2>
+    </header>
+
+    <!-- era.js가 data.js로 카드 3장을 렌더링 -->
+    <ul class="road-cards" id="road-cards"></ul>
+  </main>
+
+  <script src="js/data.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/era.js"></script>
+</body>
+</html>

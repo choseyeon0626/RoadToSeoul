@@ -1,0 +1,126 @@
+/* ── 왼쪽 고정 내비 (≥1024px) ───────────────────────── */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  z-index: 20;
+  width: var(--sidebar-w);
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+  transition: color 0.5s var(--ease), background-color 0.5s var(--ease);
+}
+
+/* data-theme="light" = 어두운 히어로 위(밝은 글자), "dark" = 흰 섹션 위(어두운 글자) */
+.sidebar[data-theme="light"] { --sb-fg: #FEFEFE;        --sb-muted: rgba(254, 254, 254, 0.72); }
+.sidebar[data-theme="dark"]  { --sb-fg: var(--gray-900); --sb-muted: var(--gray-600); }
+.sidebar { color: var(--sb-fg); }
+
+.sidebar__logo {
+  display: block;
+  line-height: 0;
+  width: 56px;
+}
+/* 로고 PNG는 흰색 글자: 흰 배경 위(data-theme="dark")에서는 검정으로 반전 */
+.sidebar__logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: filter 0.5s var(--ease);
+}
+.sidebar[data-theme="dark"] .sidebar__logo img { filter: invert(1); }
+.sidebar.is-open .sidebar__logo img { filter: invert(1); }
+
+.sidebar__toggle { display: none; }
+
+.sidebar__nav { display: flex; flex-direction: column; gap: 4px; }
+
+.sidebar__link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 15px;
+  color: var(--sb-muted);
+  transition: color 0.4s var(--ease);
+}
+.sidebar__link:hover,
+.sidebar__link:focus-visible { color: var(--sb-fg); }
+
+.sidebar__dot {
+  flex: none;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--era, transparent);
+  transition: transform 0.4s var(--ease);
+}
+.sidebar__link--plain .sidebar__dot { background: transparent; }
+
+/* 활성: 글자는 gray-900(또는 밝은 글자), 시대 컬러는 점과 밑줄에만 */
+.sidebar__link.is-active { color: var(--sb-fg); }
+.sidebar__link.is-active .sidebar__dot { transform: scale(1.5); }
+.sidebar__link.is-active .sidebar__text {
+  text-decoration: underline;
+  text-decoration-color: var(--era);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 7px;
+}
+
+/* ── 태블릿 (768~1023px): 상단 바 ───────────────────── */
+@media (max-width: 1023px) {
+  .sidebar {
+    width: auto;
+    right: 0; bottom: auto;
+    height: 64px;
+    padding: 0 var(--gutter);
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .sidebar[data-theme="dark"] {
+    background: var(--color-bg);
+    box-shadow: 0 1px 0 var(--line);   /* 1px 구분선 */
+  }
+  .sidebar__nav { flex-direction: row; gap: 28px; }
+  .sidebar__logo { width: 34px; }
+}
+
+/* ── 모바일 (<768px): 햄버거 + 전체 화면 메뉴 ──────── */
+@media (max-width: 767px) {
+  .sidebar__logo, .sidebar__toggle { position: relative; z-index: 2; }
+
+  .sidebar__toggle {
+    display: block;
+    padding: 8px 0;
+    font-size: 14px;
+    color: var(--sb-fg);
+    transition: color 0.5s var(--ease);
+  }
+
+  .sidebar__nav {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    padding: 112px var(--gutter) 48px;
+    background: var(--color-bg);
+  }
+  .sidebar__link {
+    gap: 14px;
+    padding: 12px 0;
+    font-family: var(--font-title);
+    font-size: 32px;
+    color: var(--gray-900);
+  }
+  .sidebar__dot { width: 10px; height: 10px; }
+
+  .sidebar.is-open { --sb-fg: var(--gray-900); --sb-muted: var(--gray-600); background: var(--color-bg); }
+  .sidebar.is-open .sidebar__nav { display: flex; animation: menu-in 0.4s var(--ease); }
+
+  @keyframes menu-in { from { opacity: 0; } to { opacity: 1; } }
+}
+
+body.menu-open .snap-container { overflow: hidden; }

@@ -1,0 +1,39 @@
+:root {
+  /* Era */
+  --color-era-japanese: #315B72;       /* 일제강점기 */
+  --color-era-joseon: #A83D3D;         /* 조선시대 */
+  --color-era-three-kingdoms: #C99A3E; /* 삼국시대 */
+
+  /* Background */
+  --color-bg: #FEFEFE;
+
+  /* Grayscale */
+  --gray-900: #000000;
+  --gray-800: #222222;
+  --gray-700: #444444;
+  --gray-600: #666666;
+  --gray-500: #777777;
+  --gray-400: #888888;
+  --gray-300: #999999;
+
+  /* Font */
+  --font-title: 'EbsHunminjeongeumSaeron', 'Pretendard', serif;
+  --font-body: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+
+  /* Layout (제안값) */
+  --sidebar-w: 200px;
+  --content-left: var(--sidebar-w);
+  --gutter: clamp(24px, 4vw, 48px);
+  --line: rgba(153, 153, 153, 0.45);     /* --gray-300 계열 1px 선 */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* 현재 시대 컬러 (data-era에 따라 교체) */
+  --era: var(--color-era-joseon);
+}
+[data-era="joseon"]         { --era: #A83D3D; }
+[data-era="japanese"]       { --era: #315B72; }
+[data-era="three-kingdoms"] { --era: #C99A3E; }
+
+@media (max-width: 1023px) {
+  :root { --content-left: 0px; }
+}

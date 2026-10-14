@@ -1,0 +1,148 @@
+/* 시대 페이지는 일반 문서 스크롤 (홈의 스냅 컨테이너와 다름) */
+body.era-page { overflow-y: auto; }
+body.era-page.menu-open,
+body.era-page.is-transitioning { overflow: hidden; }
+
+/* ── 레이아웃 ───────────────────────────────────────── */
+.era-hero {
+  width: 100%;
+  max-width: calc(1440px + var(--content-left));
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: clamp(72px, 11vh, 120px) var(--gutter) clamp(64px, 10vh, 120px) calc(var(--content-left) + var(--gutter));
+  transition: opacity 0.3s var(--ease);
+}
+
+.era-hero__head { margin-bottom: clamp(32px, 6vh, 64px); }
+
+/* 시대 컬러는 가는 선 하나에만 */
+.era-hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--gray-500);
+}
+.era-hero__eyebrow::before {
+  content: '';
+  width: 32px; height: 1px;
+  background: var(--era);
+}
+
+.era-hero__title {
+  font-size: clamp(36px, 4.4vw, 56px);
+  line-height: 1.2;
+  color: var(--gray-900);
+}
+
+/* ── 카드 3장: 세로형, 거의 붙여서 ─────────────────── */
+.road-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.road-card {
+  position: relative;
+  isolation: isolate;                 /* 배경 레이어(z-index:-1)를 카드 안에 가둔다 */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  aspect-ratio: 1 / 1.4;
+  padding: 24px;
+  overflow: hidden;
+  color: #FEFEFE;
+}
+
+.road-card__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-size: cover;
+  background-position: center;
+  background-image: linear-gradient(160deg, var(--era), #000000);   /* 이미지 없을 때 플레이스홀더 */
+  transition: transform 0.6s var(--ease);
+}
+.road-card::after {                    /* 가독성용 상하 오버레이 */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35), transparent 40%, rgba(0, 0, 0, 0.6));
+  transition: background 0.6s var(--ease);
+}
+
+.road-card__top { display: flex; flex-direction: column; gap: 10px; }
+
+.road-card__label {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  color: rgba(254, 254, 254, 0.9);
+}
+.road-card__sep { margin: 0 4px; color: var(--era); }   /* 구분선 '|'에 시대 컬러 포인트 */
+
+.road-card__name {
+  font-family: var(--font-title);
+  font-size: clamp(28px, 2.7vw, 36px);
+  font-weight: normal;                /* 단일 굵기 폰트: 가짜 볼드 금지 */
+  line-height: 1.25;
+  color: #FEFEFE;
+}
+
+.road-card__desc {
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(254, 254, 254, 0.9);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* hover / 키보드 포커스 */
+.road-card:hover .road-card__bg,
+.road-card:focus-visible .road-card__bg { transform: scale(1.05); }
+.road-card:hover::after,
+.road-card:focus-visible::after {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.1) 40%, rgba(0, 0, 0, 0.7));
+}
+.road-card:focus-visible { outline: 1px solid #FEFEFE; outline-offset: -8px; }
+
+/* ── 진입 전환 ──────────────────────────────────────── */
+/* 나머지 요소(타이틀·사이드 내비·다른 카드)는 페이드아웃 */
+body.is-transitioning { pointer-events: none; }
+body.is-transitioning .era-hero,
+body.is-transitioning .sidebar { opacity: 0; transition: opacity 0.3s var(--ease); }
+
+/* 확장용 클론: 현재 위치에서 뷰포트 전체로 */
+.road-card--clone { pointer-events: none; }
+.road-card--clone:hover .road-card__bg { transform: none; }
+/* 번호·설명은 페이드아웃, 도로명은 유지 (300~600ms) */
+.road-card--clone.is-expanding .road-card__label,
+.road-card--clone.is-expanding .road-card__desc {
+  opacity: 0;
+  transition: opacity 0.3s var(--ease) 0.3s;
+}
+
+/* ── 반응형 ─────────────────────────────────────────── */
+/* 태블릿: 카드 3장 유지, 높이 축소 */
+@media (max-width: 1023px) {
+  .era-hero { padding-top: 104px; }
+  .road-card { aspect-ratio: 1 / 1.25; padding: 16px; }
+  .road-card__name { font-size: 26px; }
+  .road-card__desc { font-size: 12px; -webkit-line-clamp: 4; }
+}
+
+/* 모바일: 세로 1열, 완만한 4:3 */
+@media (max-width: 767px) {
+  .era-hero { padding-top: 96px; padding-bottom: 64px; }
+  .road-cards { grid-template-columns: 1fr; }
+  .road-card { aspect-ratio: 4 / 3; padding: 24px; }
+  .road-card__name { font-size: 32px; }
+  .road-card__desc { font-size: 13px; -webkit-line-clamp: 3; }
+}

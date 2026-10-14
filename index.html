@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>길記 in Seoul – 서울길의 이야기를 찾아서</title>
+  <meta name="description" content="서울길의 이야기를 찾아서. Discover the stories behind Seoul's roads.">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+
+  <!-- 왼쪽 고정 내비 -->
+  <aside class="sidebar" id="sidebar" data-theme="light">
+    <a class="sidebar__logo" href="index.html" aria-label="길記 in Seoul – 홈"><img src="img/logo-gilgi.png" width="110" height="147" alt="길記 in Seoul"></a>
+    <button class="sidebar__toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span>메뉴</span>
+    </button>
+    <nav class="sidebar__nav" id="site-nav" aria-label="주요 메뉴">
+      <a class="sidebar__link" href="era.html?era=joseon" data-era="joseon" style="--era:#A83D3D">
+        <i class="sidebar__dot"></i><span class="sidebar__text">조선시대</span>
+      </a>
+      <a class="sidebar__link" href="era.html?era=japanese" data-era="japanese" style="--era:#315B72">
+        <i class="sidebar__dot"></i><span class="sidebar__text">일제강점기</span>
+      </a>
+      <a class="sidebar__link" href="era.html?era=three-kingdoms" data-era="three-kingdoms" style="--era:#C99A3E">
+        <i class="sidebar__dot"></i><span class="sidebar__text">삼국시대</span>
+      </a>
+      <a class="sidebar__link sidebar__link--plain" href="about.html">
+        <i class="sidebar__dot"></i><span class="sidebar__text">About</span>
+      </a>
+    </nav>
+  </aside>
+
+  <main class="snap-container" id="snap">
+
+    <!-- 풀스크린 히어로 -->
+    <section class="hero" id="hero" data-theme="light">
+      <div class="hero__bg" aria-hidden="true"></div>
+      <div class="hero__scrim" aria-hidden="true"></div>
+
+      <div class="hero__inner">
+        <h1 class="hero__logo">
+          <img src="img/logo-gilgi.png" width="110" height="143" alt="길記 in Seoul">
+        </h1>
+        <div class="hero__copy">
+          <p class="hero__ko">서울길의 이야기를 찾아서</p>
+          <p class="hero__en" lang="en">Discover the stories behind Seoul's roads.</p>
+        </div>
+      </div>
+
+      <div class="hero__cue" aria-hidden="true">
+        <span>스크롤</span>
+        <span class="hero__cue-line"></span>
+      </div>
+
+      <span class="hero__progress" aria-hidden="true">01 / 02</span>
+      <button class="hero__next" id="next" type="button">NEXT →</button>
+    </section>
+
+    <!-- 시대별 길: 4분할 패널 (호버 시 펼쳐짐) -->
+    <section class="roads" id="roads" data-theme="dark" aria-labelledby="roads-title">
+      <h2 class="visually-hidden" id="roads-title">시대별 길</h2>
+      <div class="panels" id="panels"></div>
+    </section>
+
+  </main>
+
+  <script src="js/data.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>길 – 길이 된 이름</title>
+  <meta name="description" content="도로명에 남은 인물과 이야기.">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/road.css">
+</head>
+<body class="road-page" data-era="joseon">
+
+  <aside class="sidebar" id="sidebar" data-theme="light">
+    <a class="sidebar__logo" href="index.html" aria-label="길記 in Seoul – 홈"><img src="img/logo-gilgi.png" width="110" height="147" alt="길記 in Seoul"></a>
+    <button class="sidebar__toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span>메뉴</span>
+    </button>
+    <nav class="sidebar__nav" id="site-nav" aria-label="주요 메뉴">
+      <a class="sidebar__link" href="era.html?era=joseon" data-era="joseon" style="--era:#A83D3D">
+        <i class="sidebar__dot"></i><span class="sidebar__text">조선시대</span>
+      </a>
+      <a class="sidebar__link" href="era.html?era=japanese" data-era="japanese" style="--era:#315B72">
+        <i class="sidebar__dot"></i><span class="sidebar__text">일제강점기</span>
+      </a>
+      <a class="sidebar__link" href="era.html?era=three-kingdoms" data-era="three-kingdoms" style="--era:#C99A3E">
+        <i class="sidebar__dot"></i><span class="sidebar__text">삼국시대</span>
+      </a>
+      <a class="sidebar__link sidebar__link--plain" href="about.html">
+        <i class="sidebar__dot"></i><span class="sidebar__text">About</span>
+      </a>
+    </nav>
+  </aside>
+
+  <main>
+    <!-- 카드에서 확장된 화면이 그대로 이어지는 첫 화면 -->
+    <section class="road-hero" id="road-hero" data-theme="light">
+      <div class="road-hero__bg" id="road-bg" aria-hidden="true"></div>
+      <div class="road-hero__inner">
+        <p class="road-hero__label" id="road-label"></p>
+        <h1 class="road-hero__name" id="road-name"></h1>
+      </div>
+      <p class="road-hero__person" id="road-person"></p>
+    </section>
+
+    <section class="road-body" data-theme="dark">
+      <div class="road-body__inner">
+        <div class="road-row">
+          <h2 class="road-row__title">이름의 유래<span>ORIGIN</span></h2>
+          <p class="road-row__text" id="road-desc"></p>
+        </div>
+        <div class="road-row">
+          <h2 class="road-row__title">다른 길<span>MORE ROADS</span></h2>
+          <ul class="road-row__links" id="road-more"></ul>
+        </div>
+        <div class="road-row">
+          <h2 class="road-row__title">시대<span id="road-era-en"></span></h2>
+          <a class="road-link" id="road-era" href="era.html">시대로 돌아가기 <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <footer class="road-foot"><small>© 길이 된 이름</small></footer>
+    </section>
+  </main>
+
+  <script src="js/data.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/road.js"></script>
+</body>
+</html>
